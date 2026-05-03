@@ -25,42 +25,32 @@
         .dropdown-menu { position: absolute; right: 10px; top: 55px; background: white; color: black; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border-radius: 5px; display: none; width: 160px; z-index: 100; }
         .dropdown-menu div { padding: 12px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 14px; }
 
-        /* Heart Rain Animation */
-        #chat-box { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); scroll-behavior: smooth; position: relative; }
-        .heart { position: absolute; color: rgba(255, 0, 0, 0.4); font-size: 15px; pointer-events: none; animation: fall linear infinite; z-index: 1; }
-        @keyframes fall { to { transform: translateY(100vh); opacity: 0; } }
-
-        /* Message & Reply UI */
-        .message { margin-bottom: 10px; padding: 8px 12px; border-radius: 8px; max-width: 85%; word-wrap: break-word; font-size: 15px; box-shadow: 0 1px 1px rgba(0,0,0,0.1); position: relative; z-index: 2; cursor: pointer; }
+        #chat-box { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        
+        .message { margin-bottom: 10px; padding: 8px 12px; border-radius: 8px; max-width: 85%; word-wrap: break-word; font-size: 15px; box-shadow: 0 1px 1px rgba(0,0,0,0.1); position: relative; cursor: pointer; }
         .sent { align-self: flex-end; background: #dcf8c6; border-bottom-right-radius: 2px; }
         .received { align-self: flex-start; background: white; border-bottom-left-radius: 2px; }
-        
-        .reply-content-box { background: rgba(0,0,0,0.05); border-left: 4px solid #075e54; padding: 5px; border-radius: 4px; margin-bottom: 5px; font-size: 13px; color: #555; }
         .msg-time { font-size: 10px; color: #667781; text-align: right; margin-top: 4px; display: block; }
         .chat-img { max-width: 100%; border-radius: 5px; display: block; margin-top: 5px; }
 
-        #replyPreview { display: none; background: #f0f0f0; border-left: 5px solid #075e54; padding: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; position: relative; margin: 0 8px; }
-        #replyPreview .close-reply { position: absolute; right: 10px; top: 5px; cursor: pointer; font-weight: bold; color: #888; }
-        #replyTextPreview { font-size: 13px; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .reply-container { background: rgba(0,0,0,0.05); border-left: 4px solid #075e54; padding: 5px 10px; margin-bottom: 5px; border-radius: 4px; font-size: 13px; color: #555; }
+        .reply-preview { display: none; background: #eee; padding: 8px; border-left: 4px solid #075e54; position: relative; }
+        .reply-preview span { display: block; font-size: 12px; font-weight: bold; color: #075e54; }
+        .close-reply { position: absolute; right: 5px; top: 5px; cursor: pointer; font-weight: bold; }
 
-        .bottom-bar { background: transparent; padding: 5px 8px 10px 8px; display: flex; flex-direction: column; gap: 5px; }
-        .input-wrapper-outer { display: flex; align-items: flex-end; gap: 5px; }
+        .emoji-menu { position: absolute; bottom: 70px; left: 10px; background: white; border-radius: 10px; padding: 10px; display: none; grid-template-columns: repeat(6, 1fr); gap: 10px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 20; }
+        .emoji-item { cursor: pointer; font-size: 24px; text-align: center; padding: 5px; }
+
+        .attach-menu { position: absolute; bottom: 70px; right: 60px; background: white; border-radius: 15px; padding: 15px; display: none; grid-template-columns: repeat(2, 1fr); gap: 20px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 20; }
+        .attach-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; font-size: 12px; }
+        .attach-icon { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
+
+        .bottom-bar { background: transparent; padding: 5px 8px 10px 8px; display: flex; flex-direction: column; gap: 0; }
+        .input-area-row { display: flex; align-items: flex-end; gap: 5px; width: 100%; }
         .input-wrapper { display: flex; align-items: center; background: white; border-radius: 25px; flex: 1; padding: 2px 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
         .icon-btn { font-size: 22px; cursor: pointer; color: #858b8f; padding: 8px; }
         input[type="text"] { flex: 1; border: none; outline: none; padding: 10px 5px; font-size: 16px; background: transparent; }
-        
-        /* Action Button & Blinking Animation */
-        .action-btn { background: #00897b; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: none; font-size: 20px; cursor: pointer; transition: 0.2s; }
-        .recording { background: red !important; animation: blinker 1s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0.5; } }
-
-        /* Other Menus & Modals */
-        .emoji-menu, .attach-menu { position: absolute; bottom: 80px; background: white; border-radius: 10px; padding: 10px; display: none; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 20; }
-        .emoji-menu { left: 10px; grid-template-columns: repeat(6, 1fr); gap: 10px; }
-        .emoji-item { cursor: pointer; font-size: 24px; text-align: center; padding: 5px; }
-        .attach-menu { right: 60px; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .attach-item { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; font-size: 12px; }
-        .attach-icon { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
+        .action-btn { background: #00897b; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: none; font-size: 20px; cursor: pointer; flex-shrink: 0; }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { background: white; padding: 20px; border-radius: 10px; width: 90%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
@@ -98,22 +88,6 @@
     
     <div id="chat-box"></div>
 
-    <div id="replyPreview">
-        <div class="close-reply" id="cancelReply">×</div>
-        <div id="replyTextPreview">Replying to...</div>
-    </div>
-
-    <div class="bottom-bar">
-        <div class="input-wrapper-outer">
-            <div class="input-wrapper">
-                <div class="icon-btn" id="emojiToggle">😊</div>
-                <input type="text" id="msgInput" placeholder="મેસેજ લખો..." autocomplete="off">
-                <div class="icon-btn" id="attachToggle" style="transform: rotate(45deg);">📎</div>
-            </div>
-            <button class="action-btn" id="actionBtn">🎙️</button>
-        </div>
-    </div>
-
     <div class="emoji-menu" id="emojiMenu">
         <span class="emoji-item">😊</span><span class="emoji-item">😂</span><span class="emoji-item">❤️</span><span class="emoji-item">👍</span><span class="emoji-item">🙏</span><span class="emoji-item">😘</span>
         <span class="emoji-item">🔥</span><span class="emoji-item">😭</span><span class="emoji-item">😍</span><span class="emoji-item">✨</span><span class="emoji-item">😎</span><span class="emoji-item">🌹</span>
@@ -127,6 +101,24 @@
             <div class="attach-icon" style="background: #ab47bc;">🖼️</div><span>Gallery</span>
         </div>
     </div>
+
+    <div class="bottom-bar">
+        <!-- Reply Preview Area -->
+        <div class="reply-preview" id="replyPreview">
+            <span id="replyToName">Name</span>
+            <div id="replyToText">Message...</div>
+            <div class="close-reply" onclick="cancelReply()">✕</div>
+        </div>
+
+        <div class="input-area-row">
+            <div class="input-wrapper">
+                <div class="icon-btn" id="emojiToggle">😊</div>
+                <input type="text" id="msgInput" placeholder="મેસેજ લખો..." autocomplete="off">
+                <div class="icon-btn" id="attachToggle" style="transform: rotate(45deg);">📎</div>
+            </div>
+            <button class="action-btn" id="actionBtn">🎙️</button>
+        </div>
+    </div>
 </div>
 
 <input type="file" id="fileInput" accept="image/*" style="display:none">
@@ -136,10 +128,15 @@
     <div class="modal-content">
         <div class="modal-header">Settings</div>
         <img id="myCurrentPhoto" src="">
-        <div class="setting-group"><label>My Name:</label><input type="text" id="setSenderName"></div>
-        <div class="setting-group"><label>Partner Name:</label><input type="text" id="setReceiverName"></div>
-        <div class="setting-group"><label>My Profile Pic:</label><input type="file" id="profileFile" accept="image/*">
-            <div id="cropper-container"><div id="crop-resizer"></div><button id="cropBtn" style="width:100%; background:#128c7e; color:white; padding:8px; border:none; border-radius:5px; margin-top:10px;">Confirm Photo</button></div>
+        <div class="setting-group"><label>Sender Name (My Name):</label><input type="text" id="setSenderName"></div>
+        <div class="setting-group"><label>Receiver Name (Partner Name):</label><input type="text" id="setReceiverName"></div>
+        <div class="setting-group">
+            <label>My Profile Pic:</label>
+            <input type="file" id="profileFile" accept="image/*">
+            <div id="cropper-container">
+                <div id="crop-resizer"></div>
+                <button id="cropBtn" style="width:100%; background:#128c7e; color:white; padding:8px; border:none; border-radius:5px; margin-top:10px;">Confirm Photo</button>
+            </div>
         </div>
         <div class="setting-group"><label>My Webhook URL:</label><input type="text" id="setWebhook"></div>
         <div class="modal-footer">
@@ -170,11 +167,18 @@
     let config = JSON.parse(localStorage.getItem('chatConfig')) || { sender: "Anand", receiver: "Manisha", pic: "https://cdn-icons-png.flaticon.com/512/6997/6997662.png", webhook: "" };
     let tempPicUrl = config.pic;
     let croppieInstance = null;
-    let mediaRecorder, audioChunks = [];
-    let currentReplyTo = null;
+    let mediaRecorder;
+    let audioChunks = [];
+    let replyingTo = null;
+
+    window.cancelReply = () => {
+        replyingTo = null;
+        document.getElementById('replyPreview').style.display = 'none';
+    };
 
     function init() {
         document.getElementById('displayHeaderName').innerText = config.receiver + " ❤️";
+        document.getElementById('myCurrentPhoto').src = config.pic;
         const myStatusRef = ref(db, `status/${config.sender}`);
         const otherStatusRef = ref(db, `status/${config.receiver}`);
         
@@ -188,90 +192,47 @@
         onValue(otherStatusRef, (s) => {
             if(s.exists()){
                 const d = s.val();
-                const st = document.getElementById('onlineStatus');
-                if (d.state === 'online') { st.innerText = 'Online'; st.classList.add('online-active'); }
-                else { st.innerText = `Last seen at ${d.last_seen || "recently"}`; st.classList.remove('online-active'); }
+                const statusEl = document.getElementById('onlineStatus');
+                if (d.state === 'online') {
+                    statusEl.innerText = 'Online';
+                    statusEl.classList.add('online-active');
+                } else {
+                    statusEl.innerText = `Last seen at ${d.last_seen || "recently"}`;
+                    statusEl.classList.remove('online-active');
+                }
                 if(d.photo) document.getElementById('displayPic').src = d.photo;
             }
         });
-
-        startHeartRain();
     }
 
-    function startHeartRain() {
-        const chatBox = document.getElementById('chat-box');
-        setInterval(() => {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            chatBox.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
-        }, 1000);
-    }
+    const msgInput = document.getElementById('msgInput');
+    const actionBtn = document.getElementById('actionBtn');
+
+    msgInput.oninput = () => { actionBtn.innerHTML = msgInput.value.trim() ? "➤" : "🎙️"; };
+
+    actionBtn.onclick = () => {
+        if (msgInput.value.trim()) {
+            sendMsg('text', msgInput.value.trim());
+            msgInput.value = "";
+            actionBtn.innerHTML = "🎙️";
+            cancelReply();
+        } else {
+            handleVoice();
+        }
+    };
 
     function sendMsg(type, content) {
         const msgData = { 
             sender: config.sender, 
             type, 
             content, 
-            time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}),
-            replyTo: currentReplyTo
+            time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) 
         };
+        if (replyingTo) msgData.replyTo = replyingTo;
         push(messagesRef, msgData);
         if(config.webhook && type === 'text') fetch(`${config.webhook}?from=${config.sender}&msg=${encodeURIComponent(content)}`).catch(()=>{});
-        cancelReply();
     }
 
-    function cancelReply() {
-        currentReplyTo = null;
-        document.getElementById('replyPreview').style.display = 'none';
-    }
-
-    const msgInput = document.getElementById('msgInput');
-    const actionBtn = document.getElementById('actionBtn');
-    msgInput.oninput = () => { actionBtn.innerHTML = msgInput.value.trim() ? "➤" : "🎙️"; };
-    
-    actionBtn.onclick = () => {
-        if (msgInput.value.trim()) { sendMsg('text', msgInput.value.trim()); msgInput.value = ""; actionBtn.innerHTML = "🎙️"; }
-        else { handleVoice(); }
-    };
-
-    document.getElementById('cancelReply').onclick = cancelReply;
-
-    onChildAdded(messagesRef, s => {
-        const m = s.val();
-        const div = document.createElement('div');
-        div.className = `message ${m.sender === config.sender ? 'sent' : 'received'}`;
-        
-        if(m.replyTo) {
-            const replyDiv = document.createElement('div');
-            replyDiv.className = 'reply-content-box';
-            replyDiv.innerText = m.replyTo.substring(0, 50) + (m.replyTo.length > 50 ? "..." : "");
-            div.appendChild(replyDiv);
-        }
-
-        const contentDiv = document.createElement('div');
-        if (m.type === 'image') contentDiv.innerHTML = `<img src="${m.content}" class="chat-img">`;
-        else if (m.type === 'audio') contentDiv.innerHTML = `<audio controls src="${m.content}" style="width:180px;"></audio>`;
-        else contentDiv.innerText = m.content;
-        
-        div.appendChild(contentDiv);
-        div.innerHTML += `<span class="msg-time">${m.time}</span>`;
-        
-        div.onclick = () => {
-            currentReplyTo = m.type === 'text' ? m.content : (m.type === 'image' ? '📸 Image' : '🎵 Audio');
-            document.getElementById('replyTextPreview').innerText = currentReplyTo;
-            document.getElementById('replyPreview').style.display = 'block';
-            msgInput.focus();
-        };
-
-        document.getElementById('chat-box').appendChild(div);
-        document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
-    });
-
-    // --- Voice Recording Logic (With Blinking) ---
     async function handleVoice() {
         if (!mediaRecorder || mediaRecorder.state === "inactive") {
             try {
@@ -282,14 +243,15 @@
                     const blob = new Blob(audioChunks, { type: 'audio/webm' });
                     const reader = new FileReader();
                     reader.onload = e => sendMsg('audio', e.target.result);
-                    reader.readAsDataURL(blob); audioChunks = [];
+                    reader.readAsDataURL(blob);
+                    audioChunks = [];
                 };
-                mediaRecorder.start(); 
-                actionBtn.classList.add('recording'); // Blink ચાલુ કરો
+                mediaRecorder.start();
+                actionBtn.style.background = "red";
             } catch (e) { alert("Mic permission denied."); }
-        } else { 
-            mediaRecorder.stop(); 
-            actionBtn.classList.remove('recording'); // Blink બંધ કરો
+        } else {
+            mediaRecorder.stop();
+            actionBtn.style.background = "#00897b";
         }
     }
 
@@ -303,16 +265,21 @@
     });
 
     document.querySelectorAll('.emoji-item').forEach(e => {
-        e.onclick = (ev) => { ev.stopPropagation(); msgInput.value += e.innerText; msgInput.focus(); actionBtn.innerHTML = "➤"; };
+        e.onclick = (event) => {
+            event.stopPropagation();
+            msgInput.value += e.innerText;
+            msgInput.focus();
+            actionBtn.innerHTML = "➤";
+        };
     });
 
     document.getElementById('profileFile').onchange = e => {
         const reader = new FileReader();
-        reader.onload = ev => {
+        reader.onload = event => {
             document.getElementById('cropper-container').style.display = 'block';
             if (croppieInstance) croppieInstance.destroy();
             croppieInstance = new Croppie(document.getElementById('crop-resizer'), { viewport: { width: 150, height: 150, type: 'circle' }, boundary: { width: 250, height: 250 } });
-            croppieInstance.bind({ url: ev.target.result });
+            croppieInstance.bind({ url: event.target.result });
         };
         reader.readAsDataURL(e.target.files[0]);
     };
@@ -332,14 +299,48 @@
     document.getElementById('menuToggle').onclick = e => { e.stopPropagation(); dropdown.style.display = dropdown.style.display==='block'?'none':'block'; };
     document.getElementById('emojiToggle').onclick = e => { e.stopPropagation(); emojiMenu.style.display = emojiMenu.style.display==='grid'?'none':'grid'; };
     document.getElementById('attachToggle').onclick = e => { e.stopPropagation(); attachMenu.style.display = attachMenu.style.display==='grid'?'none':'grid'; };
-    document.getElementById('openSettings').onclick = () => { 
-        document.getElementById('setSenderName').value = config.sender; 
+    document.getElementById('openSettings').onclick = () => {
+        document.getElementById('setSenderName').value = config.sender;
         document.getElementById('setReceiverName').value = config.receiver;
         document.getElementById('setWebhook').value = config.webhook;
-        document.getElementById('settingsModal').style.display = 'flex'; 
+        document.getElementById('myCurrentPhoto').src = config.pic;
+        document.getElementById('settingsModal').style.display = 'flex';
     };
     document.getElementById('clearChatAction').onclick = () => { if(confirm("બધું સાફ કરવું છે?")) remove(messagesRef).then(()=>location.reload()); };
     document.onclick = () => { dropdown.style.display='none'; emojiMenu.style.display='none'; attachMenu.style.display='none'; };
+
+    onChildAdded(messagesRef, s => {
+        const m = s.val();
+        const div = document.createElement('div');
+        div.className = `message ${m.sender === config.sender ? 'sent' : 'received'}`;
+        
+        let replyHtml = '';
+        if (m.replyTo) {
+            // WHATSAPP LOGIC: જો રીપ્લાય કરેલો મેસેજ મારો જ હોય તો "You" બતાવો, બાકી તેનું નામ.
+            const displayName = m.replyTo.sender === config.sender ? "You" : m.replyTo.sender;
+            replyHtml = `<div class="reply-container"><strong>${displayName}</strong><br>${m.replyTo.content.substring(0, 50)}</div>`;
+        }
+
+        if (m.type === 'image') div.innerHTML = `${replyHtml}<img src="${m.content}" class="chat-img">`;
+        else if (m.type === 'audio') div.innerHTML = `${replyHtml}<audio controls src="${m.content}" style="width:200px;"></audio>`;
+        else div.innerHTML = `${replyHtml}<div>${m.content}</div>`;
+        
+        div.innerHTML += `<span class="msg-time">${m.time}</span>`;
+
+        div.onclick = () => {
+            // રીપ્લાય કરતી વખતે ઓરિજિનલ મોકલનારનું નામ મોકલવું જેથી સામેવાળાને ખબર પડે.
+            replyingTo = { sender: m.sender, content: m.type === 'text' ? m.content : `[${m.type}]` };
+            
+            // ઇનપુટ બોક્સની ઉપરના પ્રિવ્યુમાં પણ "You" લોજિક:
+            document.getElementById('replyToName').innerText = m.sender === config.sender ? "You" : m.sender;
+            document.getElementById('replyToText').innerText = replyingTo.content;
+            document.getElementById('replyPreview').style.display = 'block';
+            msgInput.focus();
+        };
+
+        document.getElementById('chat-box').appendChild(div);
+        document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+    });
 
     init();
 </script>
