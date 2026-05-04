@@ -170,6 +170,11 @@
     let audioChunks = [];
     let replyingTo = null;
 
+    // નવું ટાઈમ ફોર્મેટ ફંક્શન (AM/PM માટે)
+    function getTimeFormatted() {
+        return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+
     window.cancelReply = () => {
         replyingTo = null;
         document.getElementById('replyPreview').style.display = 'none';
@@ -184,7 +189,8 @@
         onValue(ref(db, '.info/connected'), (snap) => {
             if (snap.val()) {
                 update(myStatusRef, { state: 'online', photo: config.pic });
-                onDisconnect(myStatusRef).update({ state: 'offline', last_seen: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) });
+                // અહીં ઓનલાઇન સ્ટેટસ માં AM/PM ફોર્મેટ સેટ કર્યું
+                onDisconnect(myStatusRef).update({ state: 'offline', last_seen: getTimeFormatted() });
             }
         });
 
@@ -204,7 +210,6 @@
         });
     }
 
-    // સુપર ફાસ્ટ ઇમેજ કોમ્પ્રેસર ફંક્શન
     function compressAndSend(file) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -213,18 +218,14 @@
             img.src = event.target.result;
             img.onload = () => {
                 const canvas = document.createElement('canvas');
-                // WhatsApp જેવું લોજિક: 600px પહોળાઈ રાખવાથી સ્પીડ 10 ગણી વધી જશે
                 const maxWidth = 600; 
                 const scale = maxWidth / img.width;
                 canvas.width = maxWidth;
                 canvas.height = img.height * scale;
-
                 const ctx = canvas.getContext('2d');
                 ctx.imageSmoothingEnabled = true;
                 ctx.imageSmoothingQuality = 'high';
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                
-                // 0.5 (50%) ક્વોલિટી - 12MB ફાઈલ પણ ~70KB ની થઈ જશે
                 const compressedBase64 = canvas.toDataURL('image/jpeg', 0.5);
                 sendMsg('image', compressedBase64);
             };
@@ -252,7 +253,7 @@
             sender: config.sender, 
             type, 
             content, 
-            time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) 
+            time: getTimeFormatted() // મેસેજ માં પણ AM/PM ફોર્મેટ
         };
         if (replyingTo) msgData.replyTo = replyingTo;
         push(messagesRef, msgData);
@@ -284,7 +285,7 @@
     [document.getElementById('fileInput'), document.getElementById('camInput')].forEach(el => {
         el.onchange = e => {
             const file = e.target.files[0];
-            if (file) compressAndSend(file); // અહીં કમ્પ્રેશનનો ઉપયોગ કર્યો છે
+            if (file) compressAndSend(file);
             document.getElementById('attachMenu').style.display = 'none';
         };
     });
@@ -345,7 +346,6 @@
             replyHtml = `<div class="reply-container"><strong>${displayName}</strong><br>${m.replyTo.content.substring(0, 50)}</div>`;
         }
 
-        // ઇમેજમાં loading="lazy" અને decoding="async" ઉમેર્યું જેથી રિસીવ સ્પીડ વધે
         if (m.type === 'image') div.innerHTML = `${replyHtml}<img src="${m.content}" class="chat-img" loading="lazy" decoding="async">`;
         else if (m.type === 'audio') div.innerHTML = `${replyHtml}<audio controls src="${m.content}" style="width:200px;"></audio>`;
         else div.innerHTML = `${replyHtml}<div>${m.content}</div>`;
